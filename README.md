@@ -1,9 +1,9 @@
 # govector
 
-[![Build Status](https://travis-ci.org/drewlanenga/govector.svg?branch=master)](https://travis-ci.org/drewlanenga/govector) [![GoDoc](https://godoc.org/github.com/drewlanenga/govector?status.svg)](https://godoc.org/github.com/drewlanenga/govector)
+[![Build Status](https://travis-ci.org/phenixrizen/govector.svg?branch=master)](https://travis-ci.org/phenixrizen/govector) [![GoDoc](https://godoc.org/github.com/phenixrizen/govector?status.svg)](https://godoc.org/github.com/phenixrizen/govector) [![Coverage Status](https://coveralls.io/repos/github/phenixrizen/govector/badge.svg?branch=master)](https://coveralls.io/github/phenixrizen/govector?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/phenixrizen/govector)](https://goreportcard.com/report/github.com/phenixrizen/govector)
 
-
-Provide nice vector API for handling numeric types in [Go](http://golang.org).
+Provides a nice vector API for Golang.
 
 ## Usage
 
@@ -40,3 +40,7 @@ shuffled := x.Shuffle()
 _ = x.Apply(empirical)
 _ = x.Apply(math.Sqrt)
 ```
+
+### Credits
+This library was originally a fork of:
+- https://github.com/drewlanenga/govector

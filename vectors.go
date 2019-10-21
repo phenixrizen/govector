@@ -1,7 +1,7 @@
 package govector
 
 import (
-	"fmt"
+	"errors"
 	"math"
 	"math/rand"
 	"sort"
@@ -20,6 +20,8 @@ var (
 )
 
 type Vector []float64
+
+var ErrorVectorCapacity = errors.New("the capacity of the vector is full")
 
 // Copy returns a copy the input vector.  This is useful for functions that
 // perform modification and shuffling on the order of the input vector.
@@ -120,7 +122,7 @@ func (x Vector) Mean() float64 {
 // calculating the weighted mean.
 func (x Vector) weightedSum(w Vector) (float64, error) {
 	if len(x) != len(w) {
-		return NA, fmt.Errorf("Length of weights unequal to vector length")
+		return NA, ErrorVectorLengths
 	}
 
 	ws := 0.0
@@ -194,6 +196,35 @@ func (x Vector) Min() float64 {
 		}
 	}
 	return min
+}
+
+// MinMax takes a slice of float64 and return the min and max in the slice
+func (x Vector) MinMax() (float64, float64) {
+	min := x[0]
+	max := x[0]
+	for _, v := range x {
+		if max < v {
+			max = v
+		}
+		if min > v {
+			min = v
+		}
+	}
+	return min, max
+}
+
+// FeatureScaling takes a slice of float64 and computes min-max normalization
+func (x Vector) FeatureScale() Vector {
+	length := len(x)
+	scaleFeatures := make(Vector, length)
+	for i := 0; i < length; i++ {
+		scaleFeatures[i] = x[i] * 1.0
+	}
+	min, max := x.MinMax()
+	for i := 0; i < length; i++ {
+		scaleFeatures[i] = (scaleFeatures[i] - min) / (max - min)
+	}
+	return scaleFeatures
 }
 
 // Ecdf returns the empirical cumulative distribution function.  The ECDF function
@@ -421,9 +452,9 @@ func (x *Vector) Push(y float64) {
 	return
 }
 
-//Append values to an array. Array size will not grow if unnecessary.
-//It will grow if the cap has been extended by external modification.
-func (x *Vector) PushFixed(y float64) error {
+// PushFixed values to a Vector. Slice size will not grow.
+// *It will grow if the cap has been extended by external modification.
+func (x *Vector) PushFixed(y float64) {
 	lenx := len(*x)
 	if lenx <= cap(*x) {
 		slicex := (*x)[1:]
@@ -431,8 +462,5 @@ func (x *Vector) PushFixed(y float64) error {
 		copy(z, slicex)
 		z[lenx-1] = y
 		*x = z
-		return nil
-	} else {
-		return fmt.Errorf("GoVector length greater than capacity!? len: %d cap: %d\n%#v", len(*x), cap(*x), x)
 	}
 }

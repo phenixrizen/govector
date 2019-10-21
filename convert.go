@@ -1,8 +1,10 @@
 package govector
 
 import (
-	"fmt"
+	"errors"
 )
+
+var ErrorCastToVector = errors.New("unable to cast input inot vector")
 
 // AsVector converts slices of numeric types into a Vector.
 func AsVector(any interface{}) (Vector, error) {
@@ -30,7 +32,7 @@ func AsVector(any interface{}) (Vector, error) {
 	case []float64:
 		return float64ToVector(x), nil
 	default:
-		return nil, fmt.Errorf("Unable to coerce input of type %T into vector", any)
+		return nil, ErrorCastToVector
 	}
 }
 

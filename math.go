@@ -1,14 +1,16 @@
 package govector
 
 import (
-	"fmt"
+	"errors"
 	"math"
 )
+
+var ErrorVectorLengths = errors.New("the length of the vectors are not equal")
 
 // Product returns a vector of element-wise products of two input vectors.
 func Product(x, y Vector) (Vector, error) {
 	if len(x) != len(y) {
-		return nil, fmt.Errorf("x and y have unequal lengths: %d / %d", len(x), len(y))
+		return nil, ErrorVectorLengths
 	}
 
 	p := make(Vector, len(x))
@@ -52,7 +54,7 @@ func Cosine(x, y Vector) (float64, error) {
 }
 
 // Cor returns the Pearson correlation between two vectors.
-func Cor(x, y Vector) (float64, error) {
+func Correlation(x, y Vector) (float64, error) {
 	n := float64(len(x))
 	xy, err := Product(x, y)
 	if err != nil {
@@ -67,4 +69,23 @@ func Cor(x, y Vector) (float64, error) {
 
 	r := (xy.Sum() - n*mx*my) / ((n - 1) * sx * sy)
 	return r, nil
+}
+
+// Average takes two vectors and returns a new averaged vector
+func Average(x, y Vector) (Vector, error) {
+	if len(x) != len(y) {
+		return Vector{}, ErrorVectorLengths
+	}
+	a := x.Copy()
+	// add the vectors fields
+	for i := 0; i < len(x); i++ {
+		a[i] += y[i]
+	}
+
+	// avgerage out those fields
+	for i := 0; i < len(x); i++ {
+		a[i] /= float64(2)
+	}
+
+	return a, nil
 }

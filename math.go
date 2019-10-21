@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// ErrorVectorLengths error retuned when the length of the passed vectors are not equal
 var ErrorVectorLengths = errors.New("the length of the vectors are not equal")
 
 // Product returns a vector of element-wise products of two input vectors.
@@ -14,7 +15,7 @@ func Product(x, y Vector) (Vector, error) {
 	}
 
 	p := make(Vector, len(x))
-	for i, _ := range x {
+	for i := range x {
 		p[i] = x[i] * y[i]
 	}
 	return p, nil
@@ -33,8 +34,8 @@ func DotProduct(x, y Vector) (float64, error) {
 func Norm(x Vector, pow float64) float64 {
 	s := 0.0
 
-	for _, xval := range x {
-		s += math.Pow(xval, pow)
+	for _, v := range x {
+		s += math.Pow(v, pow)
 	}
 
 	return math.Pow(s, 1/pow)
@@ -53,7 +54,7 @@ func Cosine(x, y Vector) (float64, error) {
 	return d / (xnorm * ynorm), nil
 }
 
-// Cor returns the Pearson correlation between two vectors.
+// Correlation returns the Pearson correlation between two vectors.
 func Correlation(x, y Vector) (float64, error) {
 	n := float64(len(x))
 	xy, err := Product(x, y)

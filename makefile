@@ -1,5 +1,5 @@
-PKG := "github.com/intwinelabs/gocosmosdb"
-PKG_NAME := "gremgoser"
+PKG := "github.com/phenixrizen/govector"
+PKG_NAME := "govector"
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_VENDOR := $(shell which govendor)
 USER := $(shell whoami)

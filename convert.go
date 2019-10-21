@@ -4,7 +4,8 @@ import (
 	"errors"
 )
 
-var ErrorCastToVector = errors.New("unable to cast input inot vector")
+// ErrorCastToVector error is returned when we cannot cast the interface to a vector
+var ErrorCastToVector = errors.New("unable to cast input into vector")
 
 // AsVector converts slices of numeric types into a Vector.
 func AsVector(any interface{}) (Vector, error) {
@@ -39,7 +40,7 @@ func AsVector(any interface{}) (Vector, error) {
 func uint8ToVector(x []uint8) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -48,7 +49,7 @@ func uint8ToVector(x []uint8) Vector {
 func uint16ToVector(x []uint16) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -57,7 +58,7 @@ func uint16ToVector(x []uint16) Vector {
 func uint32ToVector(x []uint32) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -66,7 +67,7 @@ func uint32ToVector(x []uint32) Vector {
 func uint64ToVector(x []uint64) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -75,7 +76,7 @@ func uint64ToVector(x []uint64) Vector {
 func intToVector(x []int) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -84,7 +85,7 @@ func intToVector(x []int) Vector {
 func int8ToVector(x []int8) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -93,7 +94,7 @@ func int8ToVector(x []int8) Vector {
 func int16ToVector(x []int16) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -102,7 +103,7 @@ func int16ToVector(x []int16) Vector {
 func int32ToVector(x []int32) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -111,7 +112,7 @@ func int32ToVector(x []int32) Vector {
 func int64ToVector(x []int64) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y
@@ -120,7 +121,7 @@ func int64ToVector(x []int64) Vector {
 func float32ToVector(x []float32) Vector {
 	y := make(Vector, len(x))
 
-	for i, _ := range x {
+	for i := range x {
 		y[i] = float64(x[i])
 	}
 	return y

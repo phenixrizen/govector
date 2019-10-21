@@ -9,7 +9,7 @@ import (
 func TestKMeans(t *testing.T) {
 	assert := assert.New(t)
 
-	RandSeed = 0
+	randSeed = 0
 
 	v := Vector{0.1, 2.3, 1.0}
 

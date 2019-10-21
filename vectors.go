@@ -1,7 +1,6 @@
 package govector
 
 import (
-	"errors"
 	"math"
 	"math/rand"
 	"sort"
@@ -10,6 +9,7 @@ import (
 )
 
 const (
+	//NA used to return bad calculations
 	NA = math.SmallestNonzeroFloat64
 )
 
@@ -19,9 +19,8 @@ var (
 	rndMutex = &sync.Mutex{}
 )
 
+// Vector is the base type of this library
 type Vector []float64
-
-var ErrorVectorCapacity = errors.New("the capacity of the vector is full")
 
 // Copy returns a copy the input vector.  This is useful for functions that
 // perform modification and shuffling on the order of the input vector.
@@ -62,14 +61,17 @@ func (x Vector) Len() int {
 	return len(x)
 }
 
+// Swap swaps two floats in the vector
 func (x Vector) Swap(i, j int) {
 	x[i], x[j] = x[j], x[i]
 }
 
+// Less compares two floats in the vector
 func (x Vector) Less(i, j int) bool {
 	return x[i] < x[j]
 }
 
+// Sort sorts the floats in a vector
 func (x Vector) Sort() {
 	sort.Sort(x)
 }
@@ -87,7 +89,7 @@ func (x Vector) Sum() float64 {
 func (x Vector) Abs() Vector {
 	y := x.Copy()
 
-	for i, _ := range y {
+	for i := range y {
 		y[i] = math.Abs(y[i])
 	}
 
@@ -126,7 +128,7 @@ func (x Vector) weightedSum(w Vector) (float64, error) {
 	}
 
 	ws := 0.0
-	for i, _ := range x {
+	for i := range x {
 		ws += x[i] * w[i]
 	}
 	return ws, nil
@@ -213,7 +215,7 @@ func (x Vector) MinMax() (float64, float64) {
 	return min, max
 }
 
-// FeatureScaling takes a slice of float64 and computes min-max normalization
+// FeatureScale takes a vector and computes a min-max normalization
 func (x Vector) FeatureScale() Vector {
 	length := len(x)
 	scaleFeatures := make(Vector, length)
@@ -325,16 +327,17 @@ func (x Vector) Diff() Vector {
 
 	if n < 2 {
 		return Vector{NA}
-	} else {
-		d := make(Vector, n-1)
-
-		i := 1
-		for i < n {
-			d[i-1] = x[i] - x[i-1]
-			i++
-		}
-		return d
 	}
+
+	d := make(Vector, n-1)
+
+	i := 1
+	for i < n {
+		d[i-1] = x[i] - x[i-1]
+		i++
+	}
+	return d
+
 }
 
 // RelDiff returns a vector of the relative differences of the input vector
@@ -343,16 +346,16 @@ func (x Vector) RelDiff() Vector {
 
 	if n < 2 {
 		return Vector{NA}
-	} else {
-		d := make(Vector, n-1)
-
-		i := 1
-		for i < n {
-			d[i-1] = (x[i] - x[i-1]) / x[i]
-			i++
-		}
-		return d
 	}
+
+	d := make(Vector, n-1)
+
+	i := 1
+	for i < n {
+		d[i-1] = (x[i] - x[i-1]) / x[i]
+		i++
+	}
+	return d
 }
 
 // Sample returns a sample of n elements of the original input vector.
@@ -408,12 +411,12 @@ func (x Vector) Rank() Vector {
 	// equivalent to a minimum rank (tie) method
 	rank := 0
 	ranks := make(Vector, len(x))
-	for i, _ := range ranks {
+	for i := range ranks {
 		ranks[i] = -1
 	}
 
-	for i, _ := range y {
-		for j, _ := range x {
+	for i := range y {
+		for j := range x {
 			if y[i] == x[j] && ranks[j] == -1 {
 				ranks[j] = float64(rank)
 			}
@@ -431,11 +434,11 @@ func (x Vector) Order() Vector {
 
 	rank := 0
 	order := make(Vector, len(x))
-	for i, _ := range order {
+	for i := range order {
 		order[i] = -1
 	}
-	for i, _ := range y {
-		for j, _ := range x {
+	for i := range y {
+		for j := range x {
 			if y[i] == x[j] && order[j] == -1 {
 				order[j] = float64(rank)
 				rank++

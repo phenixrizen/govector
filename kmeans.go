@@ -9,11 +9,12 @@ import (
 // kmeans is a simple k-means clusterer that determines centroids with the Train function,
 // and then classifies additional observations with the Nearest function.
 
-// Node represents an observation of floating point values
+// Nodes represents a collection of vectors to cluster
 type Nodes []Vector
 
-var RandSeed = time.Now().UnixNano()
+var randSeed = time.Now().UnixNano()
 
+// ErrorClusterLength error is returned when we the length of requested clusters is larger than the vectors nodes count
 var ErrorClusterLength = errors.New("the length of requested clusters is larger than the vectors nodes count")
 
 // Train takes an array of Nodes (observations), and produces as many centroids as specified by
@@ -39,7 +40,7 @@ func Train(nodes Nodes, clusterCount int, maxRounds int) (Nodes, error) {
 
 	centroids := make(Nodes, clusterCount)
 
-	r := rand.New(rand.NewSource(RandSeed))
+	r := rand.New(rand.NewSource(randSeed))
 
 	// Pick centroid starting points from Nodes
 	for i := 0; i < clusterCount; i++ {
@@ -110,7 +111,7 @@ func distance(node1, node2 Vector) float64 {
 
 	cnt := make(chan int)
 
-	for i, _ := range node1 {
+	for i := range node1 {
 		go func(i int) {
 			diff := node1[i] - node2[i]
 			squares[i] = diff * diff

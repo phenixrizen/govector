@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-// Equal determines if two nodes have the same values.
+// Equal determines if two vectors have the same values.
 func Equal(a, b Vector) bool {
 	if len(a) != len(b) {
 		return false

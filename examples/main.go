@@ -1,20 +1,3 @@
-# govector
-
-[![Build Status](https://travis-ci.org/phenixrizen/govector.svg?branch=master)](https://travis-ci.org/phenixrizen/govector) [![GoDoc](https://godoc.org/github.com/phenixrizen/govector?status.svg)](https://godoc.org/github.com/phenixrizen/govector) [![Coverage Status](https://coveralls.io/repos/github/phenixrizen/govector/badge.svg?branch=master)](https://coveralls.io/github/phenixrizen/govector?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/phenixrizen/govector)](https://goreportcard.com/report/github.com/phenixrizen/govector)
-
-Provides a nice vector API for Golang.
-
-### Get Started
-
-#### Installation
-```bash
-$ go get github.com/phenixrizen/govector
-```
-
-#### Usage
-
-```go
 package main
 
 import (
@@ -99,8 +82,3 @@ func main() {
 	}
 	fmt.Println(dist)
 }
-```
-
-### Credits
-This library was originally a fork of:
-- https://github.com/drewlanenga/govector
